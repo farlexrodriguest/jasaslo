@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import ServiceLayout from '../../components/shared/ServiceLayout.astro';
+import BlockRenderer from '../../components/blocks/BlockRenderer.astro';
+import { faqFromBlocks, faqPageSchema, serviceSchema } from '../../utils/schema.ts';
+
+export async function getStaticPaths() {
+  const services = (await getCollection('services')).filter((service) => !service.data.draft && service.data.status === 'active');
+  return services.map((service) => ({
+    params: { slug: service.data.slug },
+    props: { service: service.data },
+  }));
+}
+const { service } = Astro.props;
+const base = Astro.site?.href ?? Astro.url.origin;
+const pagePath = `/layanan/${service.slug}/`;
+// Tipe utama = Service (dirujuk WebPage.mainEntity); FAQPage bila ada blok `faq`.
+const faqItems = faqFromBlocks(service.blocks);
+const jsonLd = [
+  serviceSchema({ base, slug: service.slug, title: service.title, description: service.description, image: service.image, serviceType: service.serviceGroup }),
+  ...(faqItems.length ? [faqPageSchema({ base, path: pagePath, items: faqItems })] : []),
+];
+const mainEntityId = `${base.replace(/\/+$/, '')}${pagePath}#service`;
+---
+<ServiceLayout service={service} jsonLd={jsonLd} mainEntityId={mainEntityId} pubDate={service.pubDate} updatedDate={service.updatedDate}>
+  {service.blocks.map((block) => <BlockRenderer block={block} />)}
+</ServiceLayout>

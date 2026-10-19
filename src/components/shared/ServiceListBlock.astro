@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+const { id, eyebrow, heading, description, variant = 'listing', columns = 3 } = Astro.props;
+const services = (await getCollection('services'))
+  .filter((service) => service.data.draft !== true && service.data.status !== 'inactive')
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<section id={id} class:list={['service-directory', variant === 'home' ? 'bg-[#fef3e2] py-20 sm:py-28' : 'py-12']}>
+  <div class={variant === 'home' ? 'mx-auto max-w-[1440px] px-6 lg:px-12' : ''}>
+    {(eyebrow || heading || description) && <header class="mb-12 max-w-3xl">
+      {eyebrow && <p class="eyebrow text-[#a34a17]">{eyebrow}</p>}
+      {heading && <h2 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-[#2a1a0e] md:text-6xl">{heading}</h2>}
+      {description && <p class="mt-5 text-lg leading-8 text-[#624b39]">{description}</p>}
+    </header>}
+    {services.length ? <div class:list={['grid gap-px overflow-hidden border border-[#dfcdb8] bg-[#dfcdb8]', columns === 2 ? 'md:grid-cols-2' : 'md:grid-cols-2 xl:grid-cols-3']}>
+      {services.map((service, index) => <article class="group flex min-w-0 flex-col bg-[#fffaf2]">
+        <a href={`/layanan/${service.id}/`} class="block overflow-hidden bg-[#2a1a0e]" aria-label={`Lihat layanan ${service.data.title}`}>
+          {service.data.image ? <img src={service.data.image} alt={service.data.imageAlt || service.data.title} width="1200" height="760" loading="lazy" decoding="async" class="aspect-[6/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" /> : <div class="flex aspect-[6/4] items-center justify-center text-6xl font-black text-[#f4ae52]" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>}
+        </a>
+        <div class="flex flex-1 flex-col p-7 md:p-9">
+          <p class="eyebrow text-[#a34a17]">Layanan / {String(index + 1).padStart(2, '0')}</p>
+          <h3 class="mt-4 text-2xl font-extrabold leading-tight text-[#2a1a0e] md:text-3xl">{service.data.title}</h3>
+          <p class="mt-4 flex-1 leading-7 text-[#624b39]">{service.data.description}</p>
+          <a href={`/layanan/${service.id}/`} class="mt-8 flex items-center justify-between border-t border-[#dfcdb8] pt-5 font-bold text-[#a34a17] transition-colors hover:text-[#d4621a]">Pelajari layanan <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>)}
+    </div> : <p class="border border-[#dfcdb8] p-8 text-[#624b39]">Informasi layanan belum tersedia.</p>}
+  </div>
+</section>

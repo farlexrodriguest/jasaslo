@@ -1,0 +1,93 @@
+---
+id: 2
+ulid: "01K7R000000000000000000002"
+type: "page"
+slug: "alur-dan-persyaratan"
+section: "panduan"
+title: "Alur & Persyaratan"
+pubDate: "2026-10-11T08:23:15Z"
+updatedDate: "2026-10-17T10:41:09Z"
+description: "Gambaran tahapan umum dan dokumen yang perlu disiapkan sebelum pengajuan Sertifikat Laik Operasi atau pendampingan NIDI."
+draft: false
+eyebrow: "Panduan / Proses"
+order: 1
+image: "/images/panduan/alur-dan-persyaratan.webp"
+imageAlt: "Ilustrasi alur bertahap dari konsultasi hingga sertifikat untuk panduan alur dan persyaratan"
+blocks:
+  - component: "section"
+    id: "ikhtisar"
+    heading: "Gambaran umum"
+    content:
+      - type: "p"
+        text: "Setiap pengajuan Sertifikat Laik Operasi (SLO) atau pendampingan NIDI memiliki tahapan yang dapat berbeda tergantung jenis, kapasitas, dan kondisi instalasi. Halaman ini merangkum alur umum agar Anda dapat mempersiapkan kebutuhan sejak awal."
+      - type: "p"
+        text: "Alur di bawah bersifat indikatif. Persyaratan, urutan, dan keputusan akhir tetap mengikuti ketentuan lembaga inspeksi yang berwenang."
+  - component: "steps"
+    id: "langkah-tahapan"
+    heading: "Langkah Utama Pengurusan"
+    items:
+      - title: "1. Konsultasi Awal"
+        text: "Sampaikan spesifikasi instalasi dan jenis kebutuhan Anda."
+      - title: "2. Verifikasi Dokumen"
+        text: "Himpun data teknis, identitas, dan diagram satu garis."
+      - title: "3. Pemeriksaan & Pengujian"
+        text: "Koordinasikan pelaksanaan inspeksi bersama Lembaga Inspeksi Teknik (LIT)."
+  - component: "process-timeline"
+    id: "alur"
+    title: "Tahapan umum pendampingan"
+    steps:
+      - title: "Konsultasi awal"
+        description: "Sampaikan jenis, kapasitas, dan fungsi instalasi agar kebutuhan Anda dapat dipetakan sejak awal."
+      - title: "Identifikasi data & dokumen"
+        description: "Petakan informasi teknis dan administrasi yang sudah tersedia maupun yang masih perlu dilengkapi."
+      - title: "Penyiapan berkas"
+        description: "Susun berkas pendukung sesuai ketentuan lembaga inspeksi yang berwenang."
+      - title: "Koordinasi pemeriksaan"
+        description: "Konfirmasi jadwal dan lingkup pemeriksaan bersama pihak yang berwenang."
+      - title: "Tindak lanjut"
+        description: "Tindak lanjut atas temuan pemeriksaan hingga proses penerbitan sesuai kewenangan lembaga terkait."
+  - component: "checklist-card"
+    id: "persyaratan"
+    title: "Dokumen yang umumnya disiapkan"
+    description: "Daftar ini bersifat indikatif dan dapat berbeda sesuai jenis instalasi serta ketentuan yang berlaku."
+    items:
+      - label: "Data pemilik atau penanggung jawab instalasi"
+      - label: "Informasi lokasi dan fungsi instalasi"
+      - label: "Data teknis dan diagram instalasi, apabila tersedia"
+      - label: "Dokumen legalitas usaha atau bangunan, bila dipersyaratkan"
+    note: "Kelengkapan dan format dokumen mengikuti ketentuan lembaga yang berwenang."
+  - component: "document-list"
+    id: "daftar-dokumen-wajib"
+    title: "Daftar Dokumen Pendukung"
+    intro: "Dokumen yang umumnya disiapkan dalam proses perizinan dan sertifikasi."
+    items:
+      - name: "Identitas Pemohon / Penanggung Jawab"
+        purpose: "KTP atau akta badan usaha untuk pencatatan."
+      - name: "Diagram Satu Garis (SLD)"
+        purpose: "Skema kelistrikan instalasi untuk verifikasi teknis."
+  - component: "comparison-table"
+    id: "tabel-perbandingan"
+    title: "Perbandingan Jalur Layanan"
+    intro: "Ringkasan perbedaan utama antara pengurusan tegangan rendah dan menengah."
+    headers: ["Parameter", "Tegangan Rendah", "Tegangan Menengah"]
+    rows:
+      - ["Klasifikasi", "Rumah tinggal / usaha kecil", "Gardu / industri / gedung"]
+      - ["Dokumen Teknis", "Relatif sederhana", "SLD & proteksi rinci"]
+      - ["Pengujian", "Inspeksi instalasi pemanfaatan", "Uji cubicle & transformator"]
+    note: "Persyaratan detail dapat disesuaikan dengan kapasitas aktual."
+  - component: "note"
+    id: "catatan-kewenangan"
+    variant: "warning"
+    title: "Bukan jaminan penerbitan"
+    text: "Persyaratan dan keputusan akhir mengikuti peraturan serta lembaga berwenang. Pendampingan bukan jaminan persetujuan, penerbitan dokumen, atau kelulusan pemeriksaan."
+  - component: "faq"
+    id: "faq"
+    heading: "Pertanyaan umum"
+    items:
+      - question: "Apakah semua instalasi memiliki alur yang sama?"
+        answer: "Tidak. Alur dapat berbeda tergantung jenis, kapasitas, fungsi instalasi, dan ketentuan lembaga yang menangani."
+      - question: "Berapa lama prosesnya berlangsung?"
+        answer: "Durasi bergantung pada kelengkapan dokumen, kondisi instalasi, serta jadwal pemeriksaan dari lembaga yang berwenang."
+      - question: "Apakah saya harus sudah memiliki seluruh dokumen sebelum konsultasi?"
+        answer: "Tidak harus. Konsultasi awal justru membantu memetakan dokumen yang sudah ada dan yang masih perlu dilengkapi."
+---

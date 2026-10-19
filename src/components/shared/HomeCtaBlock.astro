@@ -1,0 +1,22 @@
+---
+/**
+ * HomeCtaBlock — ajakan penutup pada beranda (ber-brand).
+ *
+ * Props:
+ * - id?, eyebrow?, heading, ctaLabel, ctaHref?
+ */
+const { id, eyebrow, heading, ctaLabel, ctaHref = '/kontak/' } = Astro.props as {
+  id?: string;
+  eyebrow?: string;
+  heading: string;
+  ctaLabel: string;
+  ctaHref?: string;
+};
+---
+<section id={id} class="mx-auto flex max-w-[1440px] flex-wrap items-end justify-between gap-8 px-6 py-20 lg:px-12 lg:py-28">
+  <div>
+    {eyebrow && <p class="eyebrow mb-5 text-[#a34a17]">{eyebrow}</p>}
+    <h2 class="max-w-3xl text-5xl font-extrabold md:text-7xl">{heading}</h2>
+  </div>
+  <a href={ctaHref} class="border-b-2 border-[#d4621a] pb-2 text-xl font-bold hover:text-[#d4621a]">{ctaLabel} ↗</a>
+</section>

@@ -1,0 +1,68 @@
+---
+/**
+ * RelatedServiceCta — CTA panel yang menautkan konten (artikel/panduan) ke
+ * layanan terkait.
+ *
+ * Menerima layanan yang sudah diresolusi pemanggil (lihat `utils/services.ts`)
+ * agar satu resolusi dipakai bersama oleh CTA dan tagline footer, sehingga
+ * keduanya selalu sejalan. Menampilkan panel CTA dengan dua aksi: menuju halaman
+ * layanan, atau memulai konsultasi WhatsApp dengan pesan yang membawa konteks
+ * layanan dan judul konten. Panel tidak dirender bila relasi tidak ada.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { site } from '../../config/site.ts';
+import { ui } from '../../config/ui.ts';
+
+interface Props {
+  service?: CollectionEntry<'services'> | null;
+  sourceTitle?: string;
+  /** Jenis konten untuk pesan WhatsApp ("artikel" atau "panduan"). */
+  sourceLabel?: string;
+}
+
+const { service, sourceTitle, sourceLabel = 'artikel' } = Astro.props;
+
+const waNumber = String(site.contact?.whatsapp ?? '').replace(/\D/g, '');
+const waMessage = [
+  ui.contact.whatsappMessage.header,
+  `${ui.contact.whatsappMessage.service}: ${service?.data.title ?? ''}`,
+  sourceTitle ? `Saya membaca ${sourceLabel}: ${sourceTitle}` : '',
+]
+  .filter(Boolean)
+  .join('\n');
+const waHref =
+  waNumber && service
+    ? `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`
+    : undefined;
+---
+
+{service && (
+  <aside
+    aria-labelledby="layanan-terkait-eyebrow layanan-terkait-heading"
+    class="mt-16 border border-[#74503a] bg-[#2a1a0e] p-8 text-[#fef3e2] md:p-10"
+  >
+    <p id="layanan-terkait-eyebrow" class="eyebrow text-[#f4ae52]">{ui.article.relatedServiceHeading}</p>
+    <h2 id="layanan-terkait-heading" class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
+      {service.data.title}
+    </h2>
+    <p class="mt-4 max-w-2xl leading-8 text-[#e0cbb9]">{service.data.description}</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a
+        href={`/layanan/${service.data.slug}/`}
+        class="inline-flex items-center gap-2 border border-[#f3ad7b] bg-[#d4621a] px-6 py-3 text-xs font-bold uppercase tracking-widest text-[#fef3e2] transition-colors hover:bg-[#f4ae52] hover:text-[#2a1a0e]"
+      >
+        {ui.services.readMore} <span aria-hidden="true">↗</span>
+      </a>
+      {waHref && (
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 border border-[#f4ae52] px-6 py-3 text-xs font-bold uppercase tracking-widest text-[#f4ae52] transition-colors hover:bg-[#f4ae52] hover:text-[#2a1a0e]"
+        >
+          {ui.contact.whatsappCta} <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
+  </aside>
+)}

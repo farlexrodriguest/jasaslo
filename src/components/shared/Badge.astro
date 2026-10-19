@@ -1,0 +1,34 @@
+---
+/**
+ * Badge — small status or category indicator.
+ *
+ * Props:
+ * - variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' — color scheme (default: 'default')
+ * - size?: 'sm' | 'md' — size (default: 'md')
+ *
+ * Usage:
+ * <Badge variant="success">Aktif</Badge>
+ * <Badge variant="warning" size="sm">Pending</Badge>
+ */
+const {
+  variant = 'default',
+  size = 'md',
+} = Astro.props;
+
+const variants: Record<string, string> = {
+  default: 'bg-[#fffaf2] text-[#594332]',
+  primary: 'bg-[#fffaf2] text-[#d4621a]',
+  success: 'bg-[#fef3e2] text-[#d4621a]',
+  warning: 'bg-[#f4ae52] text-[#b8500f]',
+  danger: 'bg-[#fef3e2] text-[#d4621a]',
+  info: 'bg-[#fef3e2] text-[#a34a17]',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'text-xs px-2 py-0.5',
+  md: 'text-sm px-2.5 py-0.5',
+};
+---
+<span class={`inline-flex items-center font-semibold rounded-full ${variants[variant] ?? variants.default} ${sizes[size] ?? sizes.md}`}>
+  <slot />
+</span>

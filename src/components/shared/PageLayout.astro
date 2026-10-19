@@ -1,0 +1,61 @@
+---
+/**
+ * PageLayout — shell untuk halaman statis (koleksi `pages`).
+ *
+ * Struktur: header hero gelap (eyebrow, judul, deskripsi), isi blok konten,
+ * lalu CTA opsional. Identitas brand mengikuti palet espresso/cream.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from './SiteHeader.astro';
+import PageOthersList from './PageOthersList.astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  page: CollectionEntry<'pages'>['data'];
+  /** Judul layanan terkait (sudah diresolusi pemanggil) untuk tagline footer. */
+  serviceTitle?: string;
+  /** Tampilkan sidebar "Panduan Lainnya" (2 kolom, seperti pada artikel). */
+  othersList?: boolean;
+  /** Tanggal terbit/pembaruan dokumen — diteruskan ke WebPage JSON-LD. */
+  pubDate?: Date;
+  updatedDate?: Date;
+  /** @id tipe utama halaman (mis. `${url}#article`) — dirujuk WebPage.mainEntity. */
+  mainEntityId?: string;
+  /** Data schema.org (JSON-LD) yang diteruskan ke BaseLayout. */
+  jsonLd?: Record<string, unknown>[];
+}
+const { page, serviceTitle, othersList = false, pubDate, updatedDate, mainEntityId, jsonLd } = Astro.props;
+const showCta = page.showCta !== false;
+---
+<BaseLayout title={page.title} description={page.description} serviceTitle={serviceTitle} pubDate={pubDate} updatedDate={updatedDate} mainEntityId={mainEntityId} jsonLd={jsonLd}>
+<SiteHeader />
+<main id="main-content">
+<section id="utama" class="border-b border-[#dfcdb8] bg-[#2a1a0e] text-[#fef3e2]">
+<div class:list={["mx-auto max-w-[1440px] px-6 py-20 lg:px-12 lg:py-28", page.image && "grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]"]}>
+<div>
+{page.eyebrow && <p class="eyebrow text-[#f4ae52]">{page.eyebrow}</p>}
+<h1 class:list={["mt-6 text-[clamp(2.8rem,6vw,6rem)] font-extrabold leading-[1.04]", !page.image && "max-w-4xl"]}>{page.title}</h1>
+<p class="mt-8 max-w-2xl text-lg leading-8 text-[#e0cbb9]">{page.description}</p>
+</div>
+{page.image && (
+<img src={page.image} alt={page.imageAlt || page.title} width="1200" height="760" fetchpriority="high" class="mx-auto w-full max-w-xl rounded-2xl border border-[#594332] lg:max-w-none" />
+)}
+</div>
+</section>
+<section id="isi" class={othersList ? 'mx-auto max-w-[1440px] px-6 py-20 lg:px-12 lg:py-28' : 'mx-auto max-w-3xl px-6 py-20 lg:py-28'}>
+{othersList ? (
+  <div class="grid gap-14 lg:grid-cols-[.3fr_.7fr]">
+    <aside class="border-t border-[#2a1a0e] pt-5 lg:sticky lg:top-24 lg:self-start">
+      <p class="eyebrow text-[#a34a17]">Panduan / Navigasi</p>
+      <div class="mt-10 hidden lg:block"><PageOthersList excludeSlug={page.slug} /></div>
+    </aside>
+    <div>
+      <div class="page-body text-lg leading-8 text-[#594332]"><slot /></div>
+    </div>
+  </div>
+) : (
+  <div class="page-body text-lg leading-8 text-[#594332]"><slot /></div>
+)}
+</section>
+{showCta && <section id="klarifikasi" class="border-t border-[#dfcdb8] bg-[#f4ae52]"><div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-8 px-6 py-16 lg:px-12"><div><p class="eyebrow">Perlu klarifikasi?</p><h2 class="mt-4 text-3xl font-extrabold md:text-5xl">Siapkan kebutuhan instalasi Anda.</h2></div><a href="/kontak/" class="bg-[#2a1a0e] px-7 py-4 font-bold text-[#fef3e2] hover:bg-[#5b3420]">Halaman kontak ↗</a></div></section>}
+</main>
+</BaseLayout>
